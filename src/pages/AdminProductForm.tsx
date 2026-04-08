@@ -80,6 +80,7 @@ export function AdminProductForm() {
       stock: Number(formData.stock),
       hasGluten: formData.hasGluten,
       isAvailable: formData.isAvailable,
+      deliveryAvailability: formData.deliveryAvailability,
       features: formData.features,
       images: formData.images,
     };
