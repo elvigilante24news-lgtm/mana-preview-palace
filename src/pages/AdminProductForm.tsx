@@ -23,6 +23,7 @@ export function AdminProductForm() {
     stock: '',
     hasGluten: true,
     isAvailable: true,
+    deliveryAvailability: 'both' as DeliveryAvailability,
     features: [] as string[],
     images: [] as string[],
   });
