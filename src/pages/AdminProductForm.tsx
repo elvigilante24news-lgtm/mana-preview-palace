@@ -41,6 +41,7 @@ export function AdminProductForm() {
         stock: existingProduct.stock.toString(),
         hasGluten: existingProduct.hasGluten,
         isAvailable: existingProduct.isAvailable,
+        deliveryAvailability: existingProduct.deliveryAvailability || 'both',
         features: existingProduct.features,
         images: existingProduct.images,
       });
