@@ -336,6 +336,7 @@ export function Admin() {
                             <option value="confirmed" className="bg-blue-500">Confirmado</option>
                             <option value="preparing" className="bg-purple-500">En preparación</option>
                             <option value="ready" className="bg-green-500">Listo</option>
+                            <option value="in_transit" className="bg-sky-500">En camino</option>
                             <option value="delivered" className="bg-mana-green">Entregado</option>
                             <option value="cancelled" className="bg-mana-burgundy">Cancelado</option>
                           </select>
