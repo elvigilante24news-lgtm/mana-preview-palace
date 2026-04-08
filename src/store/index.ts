@@ -22,6 +22,7 @@ const sampleProducts: Product[] = [
     hasGluten: true,
     isAvailable: true,
     stock: 20,
+    deliveryAvailability: 'both',
     createdAt: new Date('2024-01-01'),
     updatedAt: new Date('2024-01-01'),
   },
@@ -36,6 +37,7 @@ const sampleProducts: Product[] = [
     hasGluten: true,
     isAvailable: true,
     stock: 50,
+    deliveryAvailability: 'both',
     createdAt: new Date('2024-01-02'),
     updatedAt: new Date('2024-01-02'),
   },
@@ -50,6 +52,7 @@ const sampleProducts: Product[] = [
     hasGluten: true,
     isAvailable: true,
     stock: 15,
+    deliveryAvailability: 'both',
     createdAt: new Date('2024-01-03'),
     updatedAt: new Date('2024-01-03'),
   },
@@ -64,6 +67,7 @@ const sampleProducts: Product[] = [
     hasGluten: true,
     isAvailable: true,
     stock: 30,
+    deliveryAvailability: 'both',
     createdAt: new Date('2024-01-04'),
     updatedAt: new Date('2024-01-04'),
   },
@@ -78,6 +82,7 @@ const sampleProducts: Product[] = [
     hasGluten: true,
     isAvailable: true,
     stock: 25,
+    deliveryAvailability: 'pickup_only',
     createdAt: new Date('2024-01-05'),
     updatedAt: new Date('2024-01-05'),
   },
@@ -92,6 +97,7 @@ const sampleProducts: Product[] = [
     hasGluten: true,
     isAvailable: true,
     stock: 5,
+    deliveryAvailability: 'both',
     createdAt: new Date('2024-01-06'),
     updatedAt: new Date('2024-01-06'),
   },
@@ -106,6 +112,7 @@ const sampleProducts: Product[] = [
     hasGluten: false,
     isAvailable: true,
     stock: 40,
+    deliveryAvailability: 'both',
     createdAt: new Date('2024-01-07'),
     updatedAt: new Date('2024-01-07'),
   },
@@ -120,6 +127,7 @@ const sampleProducts: Product[] = [
     hasGluten: true,
     isAvailable: true,
     stock: 35,
+    deliveryAvailability: 'pickup_only',
     createdAt: new Date('2024-01-08'),
     updatedAt: new Date('2024-01-08'),
   },
@@ -134,6 +142,7 @@ const sampleProducts: Product[] = [
     hasGluten: false,
     isAvailable: true,
     stock: 15,
+    deliveryAvailability: 'both',
     createdAt: new Date('2024-01-09'),
     updatedAt: new Date('2024-01-09'),
   },
@@ -148,6 +157,7 @@ const sampleProducts: Product[] = [
     hasGluten: true,
     isAvailable: true,
     stock: 8,
+    deliveryAvailability: 'both',
     createdAt: new Date('2024-01-10'),
     updatedAt: new Date('2024-01-10'),
   },
@@ -162,6 +172,7 @@ const sampleProducts: Product[] = [
     hasGluten: true,
     isAvailable: true,
     stock: 20,
+    deliveryAvailability: 'both',
     createdAt: new Date('2024-01-11'),
     updatedAt: new Date('2024-01-11'),
   },
@@ -176,6 +187,7 @@ const sampleProducts: Product[] = [
     hasGluten: true,
     isAvailable: true,
     stock: 60,
+    deliveryAvailability: 'both',
     createdAt: new Date('2024-01-12'),
     updatedAt: new Date('2024-01-12'),
   },
@@ -190,31 +202,11 @@ const sampleOrders: Order[] = [
     userEmail: 'maria@example.com',
     userPhone: '+54 376 123-4567',
     items: [
-      {
-        productId: '1',
-        productName: 'Pan de Campo',
-        productImage: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800&h=800&fit=crop',
-        quantity: 2,
-        unitPrice: 450,
-        total: 900,
-      },
-      {
-        productId: '2',
-        productName: 'Medialunas de Manteca',
-        productImage: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=800&h=800&fit=crop',
-        quantity: 6,
-        unitPrice: 380,
-        total: 2280,
-      },
+      { productId: '1', productName: 'Pan de Campo', productImage: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800&h=800&fit=crop', quantity: 2, unitPrice: 450, total: 900 },
+      { productId: '2', productName: 'Medialunas de Manteca', productImage: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=800&h=800&fit=crop', quantity: 6, unitPrice: 380, total: 2280 },
     ],
-    subtotal: 3180,
-    deliveryFee: 0,
-    total: 3180,
-    status: 'delivered',
-    paymentMethod: 'cash',
-    deliveryType: 'pickup',
-    createdAt: new Date('2024-03-01'),
-    updatedAt: new Date('2024-03-01'),
+    subtotal: 3180, deliveryFee: 0, total: 3180, status: 'delivered', paymentMethod: 'cash', deliveryType: 'pickup',
+    createdAt: new Date('2024-03-01'), updatedAt: new Date('2024-03-01'),
   },
   {
     id: 'ORD-002',
@@ -223,44 +215,23 @@ const sampleOrders: Order[] = [
     userEmail: 'maria@example.com',
     userPhone: '+54 376 123-4567',
     items: [
-      {
-        productId: '6',
-        productName: 'Torta de Chocolate',
-        productImage: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=800&h=800&fit=crop',
-        quantity: 1,
-        unitPrice: 8500,
-        total: 8500,
-      },
+      { productId: '6', productName: 'Torta de Chocolate', productImage: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=800&h=800&fit=crop', quantity: 1, unitPrice: 8500, total: 8500 },
     ],
-    subtotal: 8500,
-    deliveryFee: 500,
-    total: 9000,
-    status: 'ready',
-    paymentMethod: 'transfer',
-    deliveryType: 'delivery',
+    subtotal: 8500, deliveryFee: 500, total: 9000, status: 'ready', paymentMethod: 'transfer', deliveryType: 'delivery',
     deliveryAddress: 'Av. Lavalle 567, Posadas',
     notes: 'Es para un cumpleaños, por favor poner velitas.',
-    createdAt: new Date('2024-03-05'),
-    updatedAt: new Date('2024-03-05'),
+    createdAt: new Date('2024-03-05'), updatedAt: new Date('2024-03-05'),
   },
 ];
 
-// Admin user
 const adminUser: User = {
-  id: '1',
-  email: 'admin@manapanaderia.com',
-  name: 'Administrador',
-  lastName: 'Maná',
-  phone: '+54 376 123-4567',
-  role: 'admin',
-  createdAt: new Date(),
+  id: '1', email: 'admin@manapanaderia.com', name: 'Administrador', lastName: 'Maná',
+  phone: '+54 376 123-4567', role: 'admin', createdAt: new Date(),
 };
 
-// Create the store
 export const useStore = create<AppState>()(
   persist(
     (set, get) => ({
-      // Initial state
       user: null,
       isAuthenticated: false,
       products: sampleProducts,
@@ -273,37 +244,19 @@ export const useStore = create<AppState>()(
       isLoading: false,
       notification: null,
 
-      // Auth actions
       login: async (email: string, password: string) => {
         set({ isLoading: true });
-        
-        // Simulate API call
         await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        // Check for admin
         if (email === 'admin@manapanaderia.com' && password === 'admin123') {
-          set({ 
-            user: adminUser, 
-            isAuthenticated: true, 
-            isLoading: false 
-          });
+          set({ user: adminUser, isAuthenticated: true, isLoading: false });
           get().showNotification('Bienvenido, Administrador', 'success');
           return;
         }
-        
-        // Check for regular users (mock)
         const storedUsers = JSON.parse(localStorage.getItem('mana-users') || '[]');
-        const user = storedUsers.find((u: User & { password: string }) => 
-          u.email === email && u.password === password
-        );
-        
+        const user = storedUsers.find((u: User & { password: string }) => u.email === email && u.password === password);
         if (user) {
           const { password: _, ...userWithoutPassword } = user;
-          set({ 
-            user: userWithoutPassword, 
-            isAuthenticated: true, 
-            isLoading: false 
-          });
+          set({ user: userWithoutPassword, isAuthenticated: true, isLoading: false });
           get().showNotification(`Bienvenido, ${user.name}!`, 'success');
         } else {
           set({ isLoading: false });
@@ -314,281 +267,143 @@ export const useStore = create<AppState>()(
 
       register: async (data: RegisterData) => {
         set({ isLoading: true });
-        
-        // Simulate API call
         await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        // Check if email exists
         const storedUsers = JSON.parse(localStorage.getItem('mana-users') || '[]');
         if (storedUsers.some((u: User) => u.email === data.email)) {
           set({ isLoading: false });
           get().showNotification('El email ya está registrado', 'error');
           throw new Error('El email ya está registrado');
         }
-        
-        // Create new user
         const newUser: User & { password: string } = {
-          id: Date.now().toString(),
-          ...data,
-          role: 'customer',
-          createdAt: new Date(),
-          password: data.password,
+          id: Date.now().toString(), ...data, role: 'customer', createdAt: new Date(), password: data.password,
         };
-        
         storedUsers.push(newUser);
         localStorage.setItem('mana-users', JSON.stringify(storedUsers));
-        
         const { password: _, ...userWithoutPassword } = newUser;
-        set({ 
-          user: userWithoutPassword, 
-          isAuthenticated: true, 
-          isLoading: false 
-        });
+        set({ user: userWithoutPassword, isAuthenticated: true, isLoading: false });
         get().showNotification('Cuenta creada exitosamente', 'success');
       },
 
       logout: () => {
-        set({ 
-          user: null, 
-          isAuthenticated: false,
-          cart: [],
-        });
+        set({ user: null, isAuthenticated: false, cart: [] });
         get().showNotification('Sesión cerrada', 'info');
       },
 
-      // Product actions
       setFilters: (filters: ProductFilters) => {
         set({ filters });
-        
         const { products } = get();
         let filtered = [...products];
-        
-        if (filters.category) {
-          filtered = filtered.filter(p => p.category === filters.category);
-        }
-        
+        if (filters.category) filtered = filtered.filter(p => p.category === filters.category);
         if (filters.search) {
           const search = filters.search.toLowerCase();
-          filtered = filtered.filter(p => 
-            p.title.toLowerCase().includes(search) ||
-            p.description.toLowerCase().includes(search)
-          );
+          filtered = filtered.filter(p => p.title.toLowerCase().includes(search) || p.description.toLowerCase().includes(search));
         }
-        
-        if (filters.minPrice !== undefined) {
-          filtered = filtered.filter(p => p.price >= filters.minPrice!);
-        }
-        
-        if (filters.maxPrice !== undefined) {
-          filtered = filtered.filter(p => p.price <= filters.maxPrice!);
-        }
-        
-        if (filters.hasGluten !== undefined) {
-          filtered = filtered.filter(p => p.hasGluten === filters.hasGluten);
-        }
-        
+        if (filters.minPrice !== undefined) filtered = filtered.filter(p => p.price >= filters.minPrice!);
+        if (filters.maxPrice !== undefined) filtered = filtered.filter(p => p.price <= filters.maxPrice!);
+        if (filters.hasGluten !== undefined) filtered = filtered.filter(p => p.hasGluten === filters.hasGluten);
         if (filters.sortBy) {
           switch (filters.sortBy) {
-            case 'price-asc':
-              filtered.sort((a, b) => a.price - b.price);
-              break;
-            case 'price-desc':
-              filtered.sort((a, b) => b.price - a.price);
-              break;
-            case 'name-asc':
-              filtered.sort((a, b) => a.title.localeCompare(b.title));
-              break;
-            case 'name-desc':
-              filtered.sort((a, b) => b.title.localeCompare(a.title));
-              break;
-            case 'newest':
-              filtered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-              break;
+            case 'price-asc': filtered.sort((a, b) => a.price - b.price); break;
+            case 'price-desc': filtered.sort((a, b) => b.price - a.price); break;
+            case 'name-asc': filtered.sort((a, b) => a.title.localeCompare(b.title)); break;
+            case 'name-desc': filtered.sort((a, b) => b.title.localeCompare(a.title)); break;
+            case 'newest': filtered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()); break;
           }
         }
-        
         set({ filteredProducts: filtered });
       },
 
       addProduct: async (productData) => {
         set({ isLoading: true });
-        
         await new Promise(resolve => setTimeout(resolve, 500));
-        
-        const newProduct: Product = {
-          id: Date.now().toString(),
-          ...productData,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        };
-        
-        set(state => ({
-          products: [...state.products, newProduct],
-          filteredProducts: [...state.products, newProduct],
-          isLoading: false,
-        }));
-        
+        const newProduct: Product = { id: Date.now().toString(), ...productData, createdAt: new Date(), updatedAt: new Date() };
+        set(state => ({ products: [...state.products, newProduct], filteredProducts: [...state.products, newProduct], isLoading: false }));
         get().showNotification('Producto agregado exitosamente', 'success');
       },
 
       updateProduct: async (id, productData) => {
         set({ isLoading: true });
-        
         await new Promise(resolve => setTimeout(resolve, 500));
-        
         set(state => {
-          const updatedProducts = state.products.map(p => 
-            p.id === id ? { ...p, ...productData, updatedAt: new Date() } : p
-          );
-          return {
-            products: updatedProducts,
-            filteredProducts: updatedProducts,
-            isLoading: false,
-          };
+          const updatedProducts = state.products.map(p => p.id === id ? { ...p, ...productData, updatedAt: new Date() } : p);
+          return { products: updatedProducts, filteredProducts: updatedProducts, isLoading: false };
         });
-        
         get().showNotification('Producto actualizado exitosamente', 'success');
       },
 
       deleteProduct: async (id) => {
         set({ isLoading: true });
-        
         await new Promise(resolve => setTimeout(resolve, 500));
-        
-        set(state => ({
-          products: state.products.filter(p => p.id !== id),
-          filteredProducts: state.filteredProducts.filter(p => p.id !== id),
-          isLoading: false,
-        }));
-        
+        set(state => ({ products: state.products.filter(p => p.id !== id), filteredProducts: state.filteredProducts.filter(p => p.id !== id), isLoading: false }));
         get().showNotification('Producto eliminado exitosamente', 'success');
       },
 
-      // Cart actions
       addToCart: (product, quantity = 1) => {
         set(state => {
           const existingItem = state.cart.find(item => item.product.id === product.id);
-          
           if (existingItem) {
-            return {
-              cart: state.cart.map(item =>
-                item.product.id === product.id
-                  ? { ...item, quantity: item.quantity + quantity }
-                  : item
-              ),
-            };
+            return { cart: state.cart.map(item => item.product.id === product.id ? { ...item, quantity: item.quantity + quantity } : item) };
           }
-          
-          return {
-            cart: [...state.cart, { product, quantity }],
-          };
+          return { cart: [...state.cart, { product, quantity }] };
         });
-        
-        get().showNotification('Producto agregado al carrito', 'success');
       },
 
       removeFromCart: (productId) => {
-        set(state => ({
-          cart: state.cart.filter(item => item.product.id !== productId),
-        }));
+        set(state => ({ cart: state.cart.filter(item => item.product.id !== productId) }));
         get().showNotification('Producto eliminado del carrito', 'info');
       },
 
       updateQuantity: (productId, quantity) => {
-        if (quantity <= 0) {
-          get().removeFromCart(productId);
-          return;
-        }
-        
-        set(state => ({
-          cart: state.cart.map(item =>
-            item.product.id === productId
-              ? { ...item, quantity }
-              : item
-          ),
-        }));
+        if (quantity <= 0) { get().removeFromCart(productId); return; }
+        set(state => ({ cart: state.cart.map(item => item.product.id === productId ? { ...item, quantity } : item) }));
       },
 
-      clearCart: () => {
-        set({ cart: [] });
+      clearCart: () => { set({ cart: [] }); },
+
+      getCartTotal: () => {
+        return get().cart.reduce((total, item) => total + item.product.price * item.quantity, 0);
       },
 
-      get cartTotal() {
-        return get().cart.reduce((total, item) => 
-          total + item.product.price * item.quantity, 0
-        );
-      },
-
-      get cartCount() {
+      getCartCount: () => {
         return get().cart.reduce((count, item) => count + item.quantity, 0);
       },
 
-      // Order actions
       createOrder: async (orderData) => {
         set({ isLoading: true });
-        
         await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        const newOrder: Order = {
-          id: `ORD-${Date.now().toString().slice(-6)}`,
-          ...orderData,
-          status: 'pending',
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        };
-        
+        const newOrder: Order = { id: `ORD-${Date.now().toString().slice(-6)}`, ...orderData, status: 'pending', createdAt: new Date(), updatedAt: new Date() };
         set(state => ({
           orders: [...state.orders, newOrder],
-          userOrders: state.user?.id === orderData.userId 
-            ? [...state.userOrders, newOrder]
-            : state.userOrders,
+          userOrders: state.user?.id === orderData.userId ? [...state.userOrders, newOrder] : state.userOrders,
           isLoading: false,
         }));
-        
         get().clearCart();
         get().showNotification('Pedido realizado exitosamente', 'success');
-        
         return newOrder;
       },
 
       updateOrderStatus: async (orderId, status) => {
         set({ isLoading: true });
-        
         await new Promise(resolve => setTimeout(resolve, 500));
-        
         set(state => ({
-          orders: state.orders.map(o => 
-            o.id === orderId ? { ...o, status, updatedAt: new Date() } : o
-          ),
-          userOrders: state.userOrders.map(o => 
-            o.id === orderId ? { ...o, status, updatedAt: new Date() } : o
-          ),
+          orders: state.orders.map(o => o.id === orderId ? { ...o, status, updatedAt: new Date() } : o),
+          userOrders: state.userOrders.map(o => o.id === orderId ? { ...o, status, updatedAt: new Date() } : o),
           isLoading: false,
         }));
-        
         get().showNotification('Estado del pedido actualizado', 'success');
       },
 
-      // UI actions
       setIsLoading: (loading) => set({ isLoading: loading }),
-      
       showNotification: (message, type) => {
         set({ notification: { message, type } });
-        setTimeout(() => {
-          set({ notification: null });
-        }, 3000);
+        setTimeout(() => { set({ notification: null }); }, 3000);
       },
-      
       clearNotification: () => set({ notification: null }),
     }),
     {
       name: 'mana-storage',
       storage: createJSONStorage(() => localStorage),
-      partialize: (state) => ({ 
-        user: state.user, 
-        isAuthenticated: state.isAuthenticated,
-        cart: state.cart,
-      }),
+      partialize: (state) => ({ user: state.user, isAuthenticated: state.isAuthenticated, cart: state.cart }),
     }
   )
 );
