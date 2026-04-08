@@ -309,6 +309,27 @@ export function AdminProductForm() {
             </div>
           </div>
 
+          {/* Delivery Availability */}
+          <div>
+            <label className="form-label">Disponibilidad de entrega *</label>
+            <div className="grid sm:grid-cols-3 gap-3">
+              {(['both', 'pickup_only', 'delivery_only'] as DeliveryAvailability[]).map((opt) => (
+                <button
+                  key={opt}
+                  type="button"
+                  onClick={() => setFormData({ ...formData, deliveryAvailability: opt })}
+                  className={`p-3 border-2 rounded-xl text-sm font-medium transition-all text-center ${
+                    formData.deliveryAvailability === opt
+                      ? 'border-mana-green bg-mana-green/5 text-mana-green'
+                      : 'border-gray-200 text-gray-600 hover:border-gray-300'
+                  }`}
+                >
+                  {deliveryAvailabilityLabels[opt]}
+                </button>
+              ))}
+            </div>
+          </div>
+
           {/* Options */}
           <div className="flex flex-wrap gap-6">
             <label className="flex items-center gap-3 cursor-pointer">
