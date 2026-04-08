@@ -6,7 +6,8 @@ import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 
 export function Checkout() {
   const navigate = useNavigate();
-  const { cart, cartTotal, user, createOrder, isLoading } = useStore();
+  const { cart, getCartTotal, user, createOrder, isLoading } = useStore();
+  const cartTotal = getCartTotal();
   
   const [step, setStep] = useState(1);
   const [deliveryType, setDeliveryType] = useState<'pickup' | 'delivery'>('pickup');

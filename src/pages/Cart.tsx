@@ -5,7 +5,8 @@ import { useStore } from '@/store';
 
 export function Cart() {
   const navigate = useNavigate();
-  const { cart, removeFromCart, updateQuantity, cartTotal, clearCart } = useStore();
+  const { cart, removeFromCart, updateQuantity, getCartTotal, clearCart } = useStore();
+  const cartTotal = getCartTotal();
   const [showClearConfirm, setShowClearConfirm] = useState(false);
 
   if (cart.length === 0) {

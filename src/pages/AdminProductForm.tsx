@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft, Plus, X, Upload } from 'lucide-react';
 import { useStore } from '@/store';
-import { categoryLabels, type Category } from '@/types';
+import { categoryLabels, deliveryAvailabilityLabels, type Category, type DeliveryAvailability } from '@/types';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 
 const categories: Category[] = ['panes', 'facturas', 'tortas', 'sandwiches', 'galletas', 'especialidades'];
