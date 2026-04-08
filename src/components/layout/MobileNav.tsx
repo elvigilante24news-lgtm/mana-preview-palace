@@ -4,7 +4,8 @@ import { useStore } from '@/store';
 
 export function MobileNav() {
   const location = useLocation();
-  const { cartCount, isAuthenticated } = useStore();
+  const { getCartCount, isAuthenticated } = useStore();
+  const cartCount = getCartCount();
 
   const navItems = [
     { to: '/', icon: Home, label: 'Inicio' },

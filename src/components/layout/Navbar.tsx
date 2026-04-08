@@ -19,7 +19,8 @@ export function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
   
-  const { user, isAuthenticated, logout, cartCount } = useStore();
+  const { user, isAuthenticated, logout, getCartCount } = useStore();
+  const cartCount = getCartCount();
   const isAdmin = user?.role === 'admin';
 
   useEffect(() => {

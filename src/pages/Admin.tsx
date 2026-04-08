@@ -291,13 +291,14 @@ export function Admin() {
                   onChange={(e) => setStatusFilter(e.target.value)}
                   className="appearance-none pl-4 pr-10 py-3 bg-white border border-gray-200 rounded-xl outline-none focus:border-mana-green cursor-pointer"
                 >
-                  <option value="all">Todos los estados</option>
-                  <option value="pending">Pendiente</option>
-                  <option value="confirmed">Confirmado</option>
-                  <option value="preparing">En preparación</option>
-                  <option value="ready">Listo</option>
-                  <option value="delivered">Entregado</option>
-                  <option value="cancelled">Cancelado</option>
+                   <option value="all">Todos los estados</option>
+                   <option value="pending">Pendiente</option>
+                   <option value="confirmed">Confirmado</option>
+                   <option value="preparing">En preparación</option>
+                   <option value="ready">Listo</option>
+                   <option value="in_transit">En camino</option>
+                   <option value="delivered">Entregado</option>
+                   <option value="cancelled">Cancelado</option>
                 </select>
               </div>
             </div>
@@ -335,6 +336,7 @@ export function Admin() {
                             <option value="confirmed" className="bg-blue-500">Confirmado</option>
                             <option value="preparing" className="bg-purple-500">En preparación</option>
                             <option value="ready" className="bg-green-500">Listo</option>
+                            <option value="in_transit" className="bg-sky-500">En camino</option>
                             <option value="delivered" className="bg-mana-green">Entregado</option>
                             <option value="cancelled" className="bg-mana-burgundy">Cancelado</option>
                           </select>

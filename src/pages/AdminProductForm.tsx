@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft, Plus, X, Upload } from 'lucide-react';
 import { useStore } from '@/store';
-import { categoryLabels, type Category } from '@/types';
+import { categoryLabels, deliveryAvailabilityLabels, type Category, type DeliveryAvailability } from '@/types';
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 
 const categories: Category[] = ['panes', 'facturas', 'tortas', 'sandwiches', 'galletas', 'especialidades'];
@@ -23,6 +23,7 @@ export function AdminProductForm() {
     stock: '',
     hasGluten: true,
     isAvailable: true,
+    deliveryAvailability: 'both' as DeliveryAvailability,
     features: [] as string[],
     images: [] as string[],
   });
@@ -40,6 +41,7 @@ export function AdminProductForm() {
         stock: existingProduct.stock.toString(),
         hasGluten: existingProduct.hasGluten,
         isAvailable: existingProduct.isAvailable,
+        deliveryAvailability: existingProduct.deliveryAvailability || 'both',
         features: existingProduct.features,
         images: existingProduct.images,
       });
@@ -78,6 +80,7 @@ export function AdminProductForm() {
       stock: Number(formData.stock),
       hasGluten: formData.hasGluten,
       isAvailable: formData.isAvailable,
+      deliveryAvailability: formData.deliveryAvailability,
       features: formData.features,
       images: formData.images,
     };
@@ -302,6 +305,27 @@ export function AdminProductForm() {
                     <X className="w-3 h-3" />
                   </button>
                 </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Delivery Availability */}
+          <div>
+            <label className="form-label">Disponibilidad de entrega *</label>
+            <div className="grid sm:grid-cols-3 gap-3">
+              {(['both', 'pickup_only', 'delivery_only'] as DeliveryAvailability[]).map((opt) => (
+                <button
+                  key={opt}
+                  type="button"
+                  onClick={() => setFormData({ ...formData, deliveryAvailability: opt })}
+                  className={`p-3 border-2 rounded-xl text-sm font-medium transition-all text-center ${
+                    formData.deliveryAvailability === opt
+                      ? 'border-mana-green bg-mana-green/5 text-mana-green'
+                      : 'border-gray-200 text-gray-600 hover:border-gray-300'
+                  }`}
+                >
+                  {deliveryAvailabilityLabels[opt]}
+                </button>
               ))}
             </div>
           </div>

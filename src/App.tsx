@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from '@/components/layout/Layout';
 import { Home } from '@/pages/Home';
 import { Products } from '@/pages/Products';
+import { ProductDetail } from '@/pages/ProductDetail';
 import { Categories } from '@/pages/Categories';
 import { About } from '@/pages/About';
 import { Cart } from '@/pages/Cart';
@@ -19,15 +20,8 @@ import { useStore } from '@/store';
 
 function ProtectedRoute({ children, requireAdmin = false }: { children: React.ReactNode; requireAdmin?: boolean }) {
   const { isAuthenticated, user } = useStore();
-  
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
-  
-  if (requireAdmin && user?.role !== 'admin') {
-    return <Navigate to="/" replace />;
-  }
-  
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
+  if (requireAdmin && user?.role !== 'admin') return <Navigate to="/" replace />;
   return <>{children}</>;
 }
 
@@ -38,6 +32,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="productos" element={<Products />} />
+          <Route path="producto/:id" element={<ProductDetail />} />
           <Route path="categorias" element={<Categories />} />
           <Route path="nosotros" element={<About />} />
           <Route path="buscar" element={<Search />} />

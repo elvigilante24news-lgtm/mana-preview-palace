@@ -20,6 +20,14 @@ export interface RegisterData {
 }
 
 // Product types
+export type DeliveryAvailability = 'pickup_only' | 'delivery_only' | 'both';
+
+export const deliveryAvailabilityLabels: Record<DeliveryAvailability, string> = {
+  pickup_only: 'Solo retiro en local',
+  delivery_only: 'Solo envío a domicilio',
+  both: 'Retiro y envío disponibles',
+};
+
 export interface Product {
   id: string;
   title: string;
@@ -31,6 +39,7 @@ export interface Product {
   hasGluten: boolean;
   isAvailable: boolean;
   stock: number;
+  deliveryAvailability: DeliveryAvailability;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -69,6 +78,7 @@ export type OrderStatus =
   | 'confirmed'
   | 'preparing'
   | 'ready'
+  | 'in_transit'
   | 'delivered'
   | 'cancelled';
 
@@ -77,6 +87,7 @@ export const orderStatusLabels: Record<OrderStatus, string> = {
   confirmed: 'Confirmado',
   preparing: 'En preparación',
   ready: 'Listo para retirar',
+  in_transit: 'En camino',
   delivered: 'Entregado',
   cancelled: 'Cancelado',
 };
@@ -86,6 +97,7 @@ export const orderStatusColors: Record<OrderStatus, string> = {
   confirmed: 'bg-blue-500',
   preparing: 'bg-purple-500',
   ready: 'bg-green-500',
+  in_transit: 'bg-sky-500',
   delivered: 'bg-mana-green',
   cancelled: 'bg-mana-burgundy',
 };
@@ -162,8 +174,8 @@ export interface AppState {
   removeFromCart: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
   clearCart: () => void;
-  cartTotal: number;
-  cartCount: number;
+  getCartTotal: () => number;
+  getCartCount: () => number;
   
   // Orders
   orders: Order[];
