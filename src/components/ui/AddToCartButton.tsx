@@ -8,6 +8,7 @@ interface AddToCartButtonProps {
   quantity?: number;
   variant?: 'icon' | 'full';
   className?: string;
+  label?: string;
 }
 
 export function AddToCartButton({ product, quantity = 1, variant = 'icon', className = '' }: AddToCartButtonProps) {
