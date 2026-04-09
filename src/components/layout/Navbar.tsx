@@ -76,7 +76,7 @@ export function Navbar() {
               <span className={`font-heading font-bold text-xl transition-colors ${
                 isScrolled ? 'text-mana-green-dark' : 'text-mana-green-dark'
               }`}>
-                Maná
+                Maná​
               </span>
             </Link>
 

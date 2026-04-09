@@ -109,7 +109,7 @@ export function Home() {
             <Link
               key={product.id}
               to={`/producto/${product.id}`}
-              className="flex-shrink-0 w-36 snap-start"
+              className="flex-shrink-0 w-36 snap-start rounded-sm shadow-none"
             >
               <div className="w-36 h-36 rounded-2xl overflow-hidden shadow-card mb-2">
                 <img src={product.images[0]} alt={product.title} className="w-full h-full object-cover" />
