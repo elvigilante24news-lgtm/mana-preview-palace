@@ -67,7 +67,7 @@ export function AddToCartButton({ product, quantity = 1, variant = 'icon', class
       ) : (
         <>
           <span className="text-lg leading-none">+</span>
-          <span>Agregar al Carrito</span>
+          <span>{label || 'Agregar al Carrito'}</span>
         </>
       )}
     </button>
