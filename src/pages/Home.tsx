@@ -60,7 +60,7 @@ export function Home() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="font-heading font-bold text-lg">Envío a Domicilio</p>
-                  <p className="text-white/80 text-sm mt-0.5">Av. Lavalle 1234, Posadas</p>
+                  <p className="text-white/80 text-sm mt-0.5">Av. Uruguay 2977, Posadas</p>
                   <span className="inline-block mt-2 px-3 py-1 bg-white/20 rounded-full text-xs font-medium">
                     <MapPin className="w-3 h-3 inline mr-1" />
                     Posadas y alrededores
