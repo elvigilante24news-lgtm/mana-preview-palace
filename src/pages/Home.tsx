@@ -115,38 +115,6 @@ export function Home() {
         </div>
       </section>
 
-      {/* Featured Products */}
-      <section ref={featuredRef} className="py-10 bg-white">
-        <div className="container-app section-padding">
-          <div className="flex items-end justify-between gap-4 mb-8">
-            <div>
-              <span className="text-mana-burgundy font-medium text-xs uppercase tracking-wider">Destacados</span>
-              <h2 className="font-heading text-2xl sm:text-3xl font-bold text-foreground mt-1">Nuestros Favoritos</h2>
-            </div>
-            <Link to="/productos" className="inline-flex items-center gap-1 text-mana-green font-medium text-sm hover:text-mana-burgundy transition-colors">
-              Ver todos <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            {featuredProducts.map((product) => (
-              <Link key={product.id} to={`/producto/${product.id}`} className="featured-card bg-white rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300 block border border-gray-50">
-                <div className="relative aspect-square overflow-hidden">
-                  <img src={product.images[0]} alt={product.title} className="w-full h-full object-cover transition-transform duration-500 hover:scale-110" />
-                  {!product.hasGluten && <span className="absolute top-3 left-3 gluten-free-badge text-[10px]">Sin Gluten</span>}
-                  <div className="absolute bottom-3 right-3">
-                    <AddToCartButton product={product} variant="icon" />
-                  </div>
-                </div>
-                <div className="p-3">
-                  <span className="text-[10px] text-mana-green font-medium uppercase tracking-wider">{categoryLabels[product.category]}</span>
-                  <h3 className="font-heading font-semibold text-sm text-foreground mt-0.5 truncate">{product.title}</h3>
-                  <span className="price-tag text-base mt-1 block">${product.price.toLocaleString()}</span>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Categories */}
       <section ref={categoriesRef} className="py-14">
