@@ -8,7 +8,8 @@ import {
   X, 
   LogOut,
   Package,
-  Settings
+  Settings,
+  Bell
 } from 'lucide-react';
 import { useStore } from '@/store';
 
@@ -19,9 +20,10 @@ export function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
   
-  const { user, isAuthenticated, logout, getCartCount } = useStore();
+  const { user, isAuthenticated, logout, getCartCount, orders } = useStore();
   const cartCount = getCartCount();
   const isAdmin = user?.role === 'admin';
+  const pendingOrdersCount = isAdmin ? orders.filter(o => o.status === 'pending' || o.status === 'confirmed').length : 0;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -105,6 +107,21 @@ export function Navbar() {
                 <Search className="w-5 h-5 text-gray-700" />
               </button>
 
+              {/* Admin Pending Orders Bell */}
+              {isAdmin && (
+                <button
+                  onClick={() => navigate('/admin')}
+                  className="relative p-2 rounded-full hover:bg-mana-green/10 transition-colors"
+                >
+                  <Bell className="w-5 h-5 text-gray-700" />
+                  {pendingOrdersCount > 0 && (
+                    <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center badge-pulse">
+                      {pendingOrdersCount > 9 ? '9+' : pendingOrdersCount}
+                    </span>
+                  )}
+                </button>
+              )}
+
               {/* Cart */}
               <button
                 onClick={() => navigate('/carrito')}
@@ -132,48 +149,32 @@ export function Navbar() {
                     </div>
                   </button>
 
-                  {/* User Dropdown */}
                   {isUserMenuOpen && (
                     <div className="absolute right-0 top-full mt-2 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2 animate-scale-in">
                       <div className="px-4 py-3 border-b border-gray-100">
-                        <p className="font-medium text-gray-900">{user?.name} {user?.lastName}</p>
-                        <p className="text-sm text-gray-500">{user?.email}</p>
+                        <p className="font-medium text-foreground">{user?.name} {user?.lastName}</p>
+                        <p className="text-sm text-muted-foreground">{user?.email}</p>
                       </div>
                       
-                      <Link
-                        to="/perfil"
-                        className="flex items-center gap-3 px-4 py-2.5 hover:bg-gray-50 transition-colors"
-                        onClick={() => setIsUserMenuOpen(false)}
-                      >
+                      <Link to="/perfil" className="flex items-center gap-3 px-4 py-2.5 hover:bg-gray-50 transition-colors" onClick={() => setIsUserMenuOpen(false)}>
                         <User className="w-4 h-4 text-gray-500" />
                         <span className="text-sm text-gray-700">Mi Perfil</span>
                       </Link>
                       
-                      <Link
-                        to="/pedidos"
-                        className="flex items-center gap-3 px-4 py-2.5 hover:bg-gray-50 transition-colors"
-                        onClick={() => setIsUserMenuOpen(false)}
-                      >
+                      <Link to="/pedidos" className="flex items-center gap-3 px-4 py-2.5 hover:bg-gray-50 transition-colors" onClick={() => setIsUserMenuOpen(false)}>
                         <Package className="w-4 h-4 text-gray-500" />
                         <span className="text-sm text-gray-700">Mis Pedidos</span>
                       </Link>
                       
                       {isAdmin && (
-                        <Link
-                          to="/admin"
-                          className="flex items-center gap-3 px-4 py-2.5 hover:bg-gray-50 transition-colors"
-                          onClick={() => setIsUserMenuOpen(false)}
-                        >
+                        <Link to="/admin" className="flex items-center gap-3 px-4 py-2.5 hover:bg-gray-50 transition-colors" onClick={() => setIsUserMenuOpen(false)}>
                           <Settings className="w-4 h-4 text-gray-500" />
                           <span className="text-sm text-gray-700">Panel Admin</span>
                         </Link>
                       )}
                       
                       <div className="border-t border-gray-100 mt-2 pt-2">
-                        <button
-                          onClick={handleLogout}
-                          className="flex items-center gap-3 px-4 py-2.5 w-full hover:bg-red-50 transition-colors"
-                        >
+                        <button onClick={handleLogout} className="flex items-center gap-3 px-4 py-2.5 w-full hover:bg-red-50 transition-colors">
                           <LogOut className="w-4 h-4 text-red-500" />
                           <span className="text-sm text-red-600">Cerrar Sesión</span>
                         </button>
@@ -208,62 +209,24 @@ export function Navbar() {
       </nav>
 
       {/* Mobile Menu */}
-      <div
-        className={`fixed inset-0 z-40 lg:hidden transition-all duration-400 ${
-          isMobileMenuOpen ? 'visible' : 'invisible'
-        }`}
-      >
-        {/* Backdrop */}
-        <div
-          className={`absolute inset-0 bg-black/50 transition-opacity duration-400 ${
-            isMobileMenuOpen ? 'opacity-100' : 'opacity-0'
-          }`}
-          onClick={() => setIsMobileMenuOpen(false)}
-        />
-
-        {/* Panel */}
-        <div
-          className={`absolute right-0 top-0 h-full w-80 max-w-full bg-white shadow-xl transition-transform duration-400 ${
-            isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
-          }`}
-          style={{ transitionTimingFunction: 'var(--ease-rise)' }}
-        >
+      <div className={`fixed inset-0 z-40 lg:hidden transition-all duration-400 ${isMobileMenuOpen ? 'visible' : 'invisible'}`}>
+        <div className={`absolute inset-0 bg-black/50 transition-opacity duration-400 ${isMobileMenuOpen ? 'opacity-100' : 'opacity-0'}`} onClick={() => setIsMobileMenuOpen(false)} />
+        <div className={`absolute right-0 top-0 h-full w-80 max-w-full bg-white shadow-xl transition-transform duration-400 ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`} style={{ transitionTimingFunction: 'var(--ease-rise)' }}>
           <div className="flex flex-col h-full pt-20 pb-24 px-6">
-            {/* Mobile Nav Links */}
             <div className="flex flex-col gap-2">
               {navLinks.map((link, index) => (
-                <Link
-                  key={link.to}
-                  to={link.to}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-xl text-base font-medium transition-all ${
-                    location.pathname === link.to
-                      ? 'bg-mana-green/10 text-mana-green'
-                      : 'text-gray-700 hover:bg-gray-50'
-                  }`}
-                  style={{
-                    animationDelay: `${index * 80}ms`,
-                    animation: isMobileMenuOpen ? 'slide-up 0.4s ease-out forwards' : 'none',
-                  }}
-                >
+                <Link key={link.to} to={link.to} className={`flex items-center gap-3 px-4 py-3 rounded-xl text-base font-medium transition-all ${location.pathname === link.to ? 'bg-mana-green/10 text-mana-green' : 'text-gray-700 hover:bg-gray-50'}`} style={{ animationDelay: `${index * 80}ms`, animation: isMobileMenuOpen ? 'slide-up 0.4s ease-out forwards' : 'none' }}>
                   {link.label}
                 </Link>
               ))}
             </div>
 
-            {/* Mobile User Actions */}
             {!isAuthenticated && (
               <div className="mt-6 pt-6 border-t border-gray-100">
-                <Link
-                  to="/login"
-                  className="flex items-center justify-center gap-2 w-full py-3 bg-mana-green text-white rounded-xl font-medium"
-                >
-                  <User className="w-5 h-5" />
-                  <span>Iniciar Sesión</span>
+                <Link to="/login" className="flex items-center justify-center gap-2 w-full py-3 bg-mana-green text-white rounded-xl font-medium">
+                  <User className="w-5 h-5" /><span>Iniciar Sesión</span>
                 </Link>
-                <Link
-                  to="/registro"
-                  className="flex items-center justify-center gap-2 w-full mt-3 py-3 border-2 border-mana-green text-mana-green rounded-xl font-medium"
-                >
+                <Link to="/registro" className="flex items-center justify-center gap-2 w-full mt-3 py-3 border-2 border-mana-green text-mana-green rounded-xl font-medium">
                   <span>Crear Cuenta</span>
                 </Link>
               </div>
@@ -271,35 +234,13 @@ export function Navbar() {
 
             {isAuthenticated && (
               <div className="mt-6 pt-6 border-t border-gray-100">
-                <Link
-                  to="/perfil"
-                  className="flex items-center gap-3 px-4 py-3 text-gray-700"
-                >
-                  <User className="w-5 h-5" />
-                  <span>Mi Perfil</span>
-                </Link>
-                <Link
-                  to="/pedidos"
-                  className="flex items-center gap-3 px-4 py-3 text-gray-700"
-                >
-                  <Package className="w-5 h-5" />
-                  <span>Mis Pedidos</span>
-                </Link>
+                <Link to="/perfil" className="flex items-center gap-3 px-4 py-3 text-gray-700"><User className="w-5 h-5" /><span>Mi Perfil</span></Link>
+                <Link to="/pedidos" className="flex items-center gap-3 px-4 py-3 text-gray-700"><Package className="w-5 h-5" /><span>Mis Pedidos</span></Link>
                 {isAdmin && (
-                  <Link
-                    to="/admin"
-                    className="flex items-center gap-3 px-4 py-3 text-gray-700"
-                  >
-                    <Settings className="w-5 h-5" />
-                    <span>Panel Admin</span>
-                  </Link>
+                  <Link to="/admin" className="flex items-center gap-3 px-4 py-3 text-gray-700"><Settings className="w-5 h-5" /><span>Panel Admin</span></Link>
                 )}
-                <button
-                  onClick={handleLogout}
-                  className="flex items-center gap-3 px-4 py-3 text-red-600 w-full mt-4"
-                >
-                  <LogOut className="w-5 h-5" />
-                  <span>Cerrar Sesión</span>
+                <button onClick={handleLogout} className="flex items-center gap-3 px-4 py-3 text-red-600 w-full mt-4">
+                  <LogOut className="w-5 h-5" /><span>Cerrar Sesión</span>
                 </button>
               </div>
             )}
