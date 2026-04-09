@@ -76,7 +76,7 @@ export function Home() {
       </section>
 
       {/* Promo Banner */}
-      <section className="px-5 pb-6">
+      <section className="px-5 pb-6 shadow-none">
         <div className="container-app">
           <div className="relative bg-mana-cream rounded-2xl overflow-hidden border border-gray-100 shadow-sm">
             <div className="flex items-center">
