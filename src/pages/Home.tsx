@@ -54,7 +54,7 @@ export function Home() {
       {/* Delivery Banner */}
       <section className="px-5 pb-5">
         <div className="container-app">
-          <div className="bg-mana-green rounded-2xl p-5 text-white relative overflow-hidden">
+          <div className="bg-mana-green rounded-2xl p-5 text-white relative overflow-hidden shadow-md">
             <div className="absolute top-0 right-0 w-1/3 h-full bg-white/10 rounded-l-[60px]" />
             <div className="relative z-10">
               <div className="flex items-center justify-between">
