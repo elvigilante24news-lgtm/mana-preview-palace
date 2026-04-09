@@ -43,7 +43,7 @@ export function Home() {
         <div className="container-app">
           <button
             onClick={() => navigate('/buscar')}
-            className="w-full flex items-center gap-3 px-5 py-3.5 bg-white rounded-2xl shadow-sm border border-gray-100 text-gray-400 hover:border-mana-green/30 transition-colors"
+            className="w-full flex items-center gap-3 px-5 py-3.5 bg-white rounded-2xl border border-gray-100 text-gray-400 hover:border-mana-green/30 transition-colors shadow-sm"
           >
             <Search className="w-5 h-5" />
             <span className="text-sm">Buscar en Maná...</span>
