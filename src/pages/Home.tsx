@@ -31,12 +31,6 @@ export function Home() {
 
   return (
     <div className="overflow-hidden bg-mana-cream">
-      {/* Header area with title */}
-      <section className="pt-24 pb-4 px-5">
-        <div className="container-app flex items-center justify-between">
-          <h1 className="font-heading text-2xl font-bold text-foreground">Inicio</h1>
-        </div>
-      </section>
 
       {/* Search Bar */}
       <section className="px-5 pb-5">
