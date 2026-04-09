@@ -43,7 +43,7 @@ export function Home() {
         <div className="container-app">
           <button
             onClick={() => navigate('/buscar')}
-            className="w-full flex items-center gap-3 px-5 py-3.5 bg-white rounded-2xl shadow-sm border border-gray-100 text-gray-400 hover:border-mana-green/30 transition-colors"
+            className="w-full flex items-center gap-3 px-5 py-3.5 bg-white rounded-2xl border border-gray-100 text-gray-400 hover:border-mana-green/30 transition-colors shadow-sm"
           >
             <Search className="w-5 h-5" />
             <span className="text-sm">Buscar en Maná...</span>
@@ -54,13 +54,13 @@ export function Home() {
       {/* Delivery Banner */}
       <section className="px-5 pb-5">
         <div className="container-app">
-          <div className="bg-mana-green rounded-2xl p-5 text-white relative overflow-hidden">
+          <div className="bg-mana-green rounded-2xl p-5 text-white relative overflow-hidden shadow-md">
             <div className="absolute top-0 right-0 w-1/3 h-full bg-white/10 rounded-l-[60px]" />
             <div className="relative z-10">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="font-heading font-bold text-lg">Envío a Domicilio</p>
-                  <p className="text-white/80 text-sm mt-0.5">Av. Lavalle 1234, Posadas</p>
+                  <p className="text-white/80 text-sm mt-0.5">Av. Uruguay 2977, Posadas</p>
                   <span className="inline-block mt-2 px-3 py-1 bg-white/20 rounded-full text-xs font-medium">
                     <MapPin className="w-3 h-3 inline mr-1" />
                     Posadas y alrededores
@@ -76,7 +76,7 @@ export function Home() {
       </section>
 
       {/* Promo Banner */}
-      <section className="px-5 pb-6">
+      <section className="px-5 pb-6 shadow-none">
         <div className="container-app">
           <div className="relative bg-mana-cream rounded-2xl overflow-hidden border border-gray-100 shadow-sm">
             <div className="flex items-center">
@@ -109,7 +109,7 @@ export function Home() {
             <Link
               key={product.id}
               to={`/producto/${product.id}`}
-              className="flex-shrink-0 w-36 snap-start"
+              className="flex-shrink-0 w-36 snap-start rounded-sm shadow-none"
             >
               <div className="w-36 h-36 rounded-2xl overflow-hidden shadow-card mb-2">
                 <img src={product.images[0]} alt={product.title} className="w-full h-full object-cover" />
