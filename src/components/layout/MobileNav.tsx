@@ -34,7 +34,7 @@ export function MobileNav() {
                 <Icon className={`w-6 h-6 transition-colors ${
                   isActive ? 'text-mana-green' : 'text-gray-400'
                 }`} />
-                {item.badge && item.badge > 0 && (
+                {item.badge != null && item.badge > 0 && (
                   <span className="absolute -top-2 -right-2 w-4 h-4 bg-mana-burgundy text-white text-[10px] font-bold rounded-full flex items-center justify-center">
                     {item.badge > 9 ? '9+' : item.badge}
                   </span>

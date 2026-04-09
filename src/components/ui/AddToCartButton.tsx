@@ -8,9 +8,10 @@ interface AddToCartButtonProps {
   quantity?: number;
   variant?: 'icon' | 'full';
   className?: string;
+  label?: string;
 }
 
-export function AddToCartButton({ product, quantity = 1, variant = 'icon', className = '' }: AddToCartButtonProps) {
+export function AddToCartButton({ product, quantity = 1, variant = 'icon', className = '', label }: AddToCartButtonProps) {
   const [state, setState] = useState<'idle' | 'added'>('idle');
   const { addToCart } = useStore();
 
@@ -66,7 +67,7 @@ export function AddToCartButton({ product, quantity = 1, variant = 'icon', class
       ) : (
         <>
           <span className="text-lg leading-none">+</span>
-          <span>Agregar al Carrito</span>
+          <span>{label || 'Agregar al Carrito'}</span>
         </>
       )}
     </button>

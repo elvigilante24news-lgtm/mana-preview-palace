@@ -1,8 +1,8 @@
 import { useState, useMemo } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft, Minus, Plus, Store, Truck, ShoppingCart, Star, Package, Wheat } from 'lucide-react';
+import { ArrowLeft, Minus, Plus, Store, Truck, Heart, Wheat } from 'lucide-react';
 import { useStore } from '@/store';
-import { categoryLabels, deliveryAvailabilityLabels } from '@/types';
+import { categoryLabels } from '@/types';
 import { AddToCartButton } from '@/components/ui/AddToCartButton';
 
 type WeightUnit = 'unidad' | 'kg' | 'g';
@@ -17,13 +17,13 @@ export function ProductDetail() {
   const [quantity, setQuantity] = useState(1);
   const [weightUnit, setWeightUnit] = useState<WeightUnit>('unidad');
   const [weightValue, setWeightValue] = useState(1);
-  const [selectedImage, setSelectedImage] = useState(0);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   if (!product) {
     return (
       <div className="min-h-screen pt-24 pb-24 lg:pb-12 flex items-center justify-center">
         <div className="text-center px-4">
-          <h1 className="font-heading text-2xl font-bold text-gray-900 mb-2">Producto no encontrado</h1>
+          <h1 className="font-heading text-2xl font-bold text-foreground mb-2">Producto no encontrado</h1>
           <Link to="/productos" className="btn-primary inline-flex items-center gap-2 mt-4">
             <ArrowLeft className="w-5 h-5" /> Ver Productos
           </Link>
@@ -39,283 +39,184 @@ export function ProductDetail() {
   const relatedProducts = products.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
 
   return (
-    <div className="min-h-screen pt-24 pb-24 lg:pb-12">
-      <div className="container-app section-padding">
-        {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-sm text-gray-500 mb-6">
-          <Link to="/" className="hover:text-mana-green transition-colors">Inicio</Link>
-          <span>/</span>
-          <Link to="/productos" className="hover:text-mana-green transition-colors">Productos</Link>
-          <span>/</span>
-          <Link to={`/productos?categoria=${product.category}`} className="hover:text-mana-green transition-colors">
-            {categoryLabels[product.category]}
-          </Link>
-          <span>/</span>
-          <span className="text-gray-900 font-medium">{product.title}</span>
+    <div className="min-h-screen pt-20 pb-28 lg:pb-12 bg-mana-cream">
+      {/* Back button */}
+      <div className="container-app section-padding pt-4 pb-2">
+        <button
+          onClick={() => navigate(-1)}
+          className="w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center hover:bg-gray-50 transition-colors"
+        >
+          <ArrowLeft className="w-5 h-5 text-gray-700" />
+        </button>
+      </div>
+
+      {/* Product Image - centered like reference */}
+      <div className="flex justify-center px-6 mb-6">
+        <div className="relative w-64 h-64 sm:w-72 sm:h-72">
+          <img
+            src={product.images[0]}
+            alt={product.title}
+            className="w-full h-full object-cover rounded-full shadow-xl"
+          />
+          {!product.hasGluten && (
+            <span className="absolute top-2 left-2 gluten-free-badge px-2 py-1 text-xs rounded-full">
+              <Wheat className="w-3 h-3 inline mr-1" />
+              Sin Gluten
+            </span>
+          )}
+          {product.stock <= 5 && product.stock > 0 && (
+            <span className="absolute top-2 right-2 px-2 py-1 bg-amber-100 text-amber-700 rounded-full text-[10px] font-medium">
+              ¡Últimas!
+            </span>
+          )}
         </div>
+      </div>
 
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
-          {/* Image Gallery */}
-          <div className="space-y-4">
-            <div className="relative aspect-square rounded-2xl overflow-hidden bg-white shadow-card">
-              <img
-                src={product.images[selectedImage]}
-                alt={product.title}
-                className="w-full h-full object-cover"
-              />
-              {!product.hasGluten && (
-                <span className="absolute top-4 left-4 gluten-free-badge px-3 py-1.5 text-sm">
-                  <Wheat className="w-4 h-4 inline mr-1" />
-                  Sin Gluten
-                </span>
-              )}
-              {product.stock <= 5 && product.stock > 0 && (
-                <span className="absolute top-4 right-4 px-3 py-1.5 bg-amber-100 text-amber-700 rounded-full text-xs font-medium">
-                  ¡Últimas unidades!
-                </span>
-              )}
-            </div>
-            {product.images.length > 1 && (
-              <div className="flex gap-3">
-                {product.images.map((img, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setSelectedImage(idx)}
-                    className={`w-20 h-20 rounded-xl overflow-hidden border-2 transition-all ${
-                      selectedImage === idx ? 'border-mana-green shadow-md' : 'border-transparent opacity-70 hover:opacity-100'
-                    }`}
-                  >
-                    <img src={img} alt={`${product.title} ${idx + 1}`} className="w-full h-full object-cover" />
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Product Info */}
-          <div className="space-y-6">
-            {/* Category & Title */}
+      {/* Product Info Card */}
+      <div className="container-app section-padding">
+        <div className="bg-white rounded-3xl shadow-card p-6 space-y-5">
+          {/* Title + Favorite */}
+          <div className="flex items-start justify-between gap-3">
             <div>
-              <span className="inline-block px-3 py-1 bg-mana-green/10 text-mana-green rounded-full text-xs font-medium uppercase tracking-wider mb-3">
-                {categoryLabels[product.category]}
-              </span>
-              <h1 className="font-heading text-3xl sm:text-4xl font-bold text-gray-900">
-                {product.title}
-              </h1>
+              <h1 className="font-heading text-2xl font-bold text-foreground">{product.title}</h1>
+              <p className="text-sm text-muted-foreground mt-0.5">{categoryLabels[product.category]}</p>
             </div>
+            <button
+              onClick={() => setIsFavorite(!isFavorite)}
+              className="mt-1 flex-shrink-0"
+            >
+              <Heart
+                className={`w-6 h-6 transition-colors ${
+                  isFavorite ? 'fill-red-500 text-red-500' : 'text-gray-300'
+                }`}
+              />
+            </button>
+          </div>
 
-            {/* Price */}
-            <div className="flex items-baseline gap-3">
-              <span className="font-heading text-3xl font-bold text-mana-burgundy">
-                ${totalPrice.toLocaleString('es-AR', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
+          {/* Quantity selector + Price */}
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3 bg-gray-100 rounded-full p-1">
+              <button
+                onClick={() => {
+                  if (weightUnit === 'unidad') setQuantity(Math.max(1, quantity - 1));
+                  else if (weightUnit === 'kg') setWeightValue(Math.max(0.25, weightValue - 0.25));
+                  else setWeightValue(Math.max(50, weightValue - 50));
+                }}
+                className="w-9 h-9 rounded-full bg-white shadow-sm flex items-center justify-center hover:bg-gray-50 transition-colors"
+              >
+                <Minus className="w-4 h-4 text-gray-600" />
+              </button>
+              <span className="w-8 text-center font-semibold text-foreground">
+                {weightUnit === 'unidad' ? quantity : weightValue}
               </span>
-              {weightUnit !== 'unidad' && (
-                <span className="text-gray-500 text-sm">
-                  (${product.price.toLocaleString()}/kg)
+              <button
+                onClick={() => {
+                  if (weightUnit === 'unidad') setQuantity(Math.min(product.stock, quantity + 1));
+                  else if (weightUnit === 'kg') setWeightValue(weightValue + 0.25);
+                  else setWeightValue(weightValue + 50);
+                }}
+                className="w-9 h-9 rounded-full bg-mana-green shadow-sm flex items-center justify-center hover:bg-mana-green-dark transition-colors"
+              >
+                <Plus className="w-4 h-4 text-white" />
+              </button>
+            </div>
+            <span className="font-heading text-2xl font-bold text-mana-green">
+              ${totalPrice.toLocaleString('es-AR', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
+            </span>
+          </div>
+
+          {/* Unit selector */}
+          <div className="flex gap-2">
+            {(['unidad', 'kg', 'g'] as WeightUnit[]).map((unit) => (
+              <button
+                key={unit}
+                onClick={() => {
+                  setWeightUnit(unit);
+                  if (unit === 'kg') setWeightValue(1);
+                  if (unit === 'g') setWeightValue(250);
+                  if (unit === 'unidad') setQuantity(1);
+                }}
+                className={`px-4 py-2 rounded-full text-xs font-medium transition-all ${
+                  weightUnit === unit
+                    ? 'bg-mana-green text-white'
+                    : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                }`}
+              >
+                {unit === 'unidad' ? 'Unidades' : unit.toUpperCase()}
+              </button>
+            ))}
+          </div>
+
+          {/* Description */}
+          <div>
+            <h3 className="font-semibold text-foreground text-sm mb-1">Descripción</h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">{product.description}</p>
+          </div>
+
+          {/* Features as tags */}
+          {product.features.length > 0 && (
+            <div className="flex flex-wrap gap-2">
+              {product.features.map((feat, idx) => (
+                <span key={idx} className="px-3 py-1.5 bg-mana-cream rounded-full text-xs text-gray-600 font-medium">
+                  {feat}
                 </span>
-              )}
+              ))}
             </div>
+          )}
 
-            {/* Description */}
-            <p className="text-gray-600 leading-relaxed text-base">
-              {product.description}
-            </p>
-
-            {/* Features */}
-            {product.features.length > 0 && (
-              <div>
-                <h3 className="font-medium text-gray-900 mb-3">Características</h3>
-                <div className="flex flex-wrap gap-2">
-                  {product.features.map((feat, idx) => (
-                    <span key={idx} className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-mana-cream rounded-full text-sm text-gray-700">
-                      <Star className="w-3 h-3 text-mana-green fill-mana-green" />
-                      {feat}
-                    </span>
-                  ))}
+          {/* Delivery Info */}
+          <div className="space-y-2">
+            <h3 className="font-semibold text-foreground text-sm">Disponibilidad</h3>
+            {(product.deliveryAvailability === 'both' || product.deliveryAvailability === 'pickup_only') && (
+              <div className="flex items-center gap-3 text-sm">
+                <div className="w-8 h-8 bg-mana-green/10 rounded-full flex items-center justify-center">
+                  <Store className="w-4 h-4 text-mana-green" />
                 </div>
+                <span className="text-gray-600">Retiro en local</span>
               </div>
             )}
-
-            {/* Delivery Info */}
-            <div className="bg-mana-cream rounded-2xl p-5 space-y-3">
-              <h3 className="font-medium text-gray-900 text-sm uppercase tracking-wider">Disponibilidad de entrega</h3>
-              <div className="flex flex-col gap-2">
-                {(product.deliveryAvailability === 'both' || product.deliveryAvailability === 'pickup_only') && (
-                  <div className="flex items-center gap-3 text-sm">
-                    <div className="w-8 h-8 bg-mana-green/10 rounded-lg flex items-center justify-center">
-                      <Store className="w-4 h-4 text-mana-green" />
-                    </div>
-                    <div>
-                      <p className="font-medium text-gray-900">Retiro en local</p>
-                      <p className="text-gray-500 text-xs">Av. Lavalle 1234, Posadas</p>
-                    </div>
-                  </div>
-                )}
-                {(product.deliveryAvailability === 'both' || product.deliveryAvailability === 'delivery_only') && (
-                  <div className="flex items-center gap-3 text-sm">
-                    <div className="w-8 h-8 bg-mana-burgundy/10 rounded-lg flex items-center justify-center">
-                      <Truck className="w-4 h-4 text-mana-burgundy" />
-                    </div>
-                    <div>
-                      <p className="font-medium text-gray-900">Envío a domicilio</p>
-                      <p className="text-gray-500 text-xs">Posadas y alrededores</p>
-                    </div>
-                  </div>
-                )}
-                {product.deliveryAvailability === 'pickup_only' && (
-                  <p className="text-xs text-amber-600 bg-amber-50 px-3 py-2 rounded-lg">
-                    ⚠ Este producto solo está disponible para retiro en el local
-                  </p>
-                )}
+            {(product.deliveryAvailability === 'both' || product.deliveryAvailability === 'delivery_only') && (
+              <div className="flex items-center gap-3 text-sm">
+                <div className="w-8 h-8 bg-mana-burgundy/10 rounded-full flex items-center justify-center">
+                  <Truck className="w-4 h-4 text-mana-burgundy" />
+                </div>
+                <span className="text-gray-600">Envío a domicilio</span>
               </div>
-            </div>
-
-            {/* Weight / Quantity Selector */}
-            <div className="space-y-4">
-              <h3 className="font-medium text-gray-900">Cantidad</h3>
-              
-              {/* Unit selector */}
-              <div className="flex gap-2">
-                {(['unidad', 'kg', 'g'] as WeightUnit[]).map((unit) => (
-                  <button
-                    key={unit}
-                    onClick={() => {
-                      setWeightUnit(unit);
-                      if (unit === 'kg') setWeightValue(1);
-                      if (unit === 'g') setWeightValue(250);
-                      if (unit === 'unidad') setQuantity(1);
-                    }}
-                    className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
-                      weightUnit === unit
-                        ? 'bg-mana-green text-white'
-                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                    }`}
-                  >
-                    {unit === 'unidad' ? 'Unidades' : unit.toUpperCase()}
-                  </button>
-                ))}
-              </div>
-
-              {/* Quantity controls */}
-              {weightUnit === 'unidad' ? (
-                <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-3 bg-white border-2 border-gray-200 rounded-xl p-1">
-                    <button
-                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      className="w-10 h-10 rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
-                    >
-                      <Minus className="w-4 h-4" />
-                    </button>
-                    <span className="w-12 text-center font-semibold text-lg">{quantity}</span>
-                    <button
-                      onClick={() => setQuantity(Math.min(product.stock, quantity + 1))}
-                      className="w-10 h-10 rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
-                    >
-                      <Plus className="w-4 h-4" />
-                    </button>
-                  </div>
-                  <span className="text-sm text-gray-500">{product.stock} disponibles</span>
-                </div>
-              ) : weightUnit === 'kg' ? (
-                <div className="space-y-3">
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-3 bg-white border-2 border-gray-200 rounded-xl p-1">
-                      <button
-                        onClick={() => setWeightValue(Math.max(0.25, weightValue - 0.25))}
-                        className="w-10 h-10 rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
-                      >
-                        <Minus className="w-4 h-4" />
-                      </button>
-                      <span className="w-16 text-center font-semibold text-lg">{weightValue}</span>
-                      <button
-                        onClick={() => setWeightValue(weightValue + 0.25)}
-                        className="w-10 h-10 rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
-                      >
-                        <Plus className="w-4 h-4" />
-                      </button>
-                    </div>
-                    <span className="text-sm text-gray-500">kg</span>
-                  </div>
-                  <div className="flex gap-2">
-                    {[0.25, 0.5, 1, 2].map((v) => (
-                      <button
-                        key={v}
-                        onClick={() => setWeightValue(v)}
-                        className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                          weightValue === v ? 'bg-mana-green/10 text-mana-green border border-mana-green' : 'bg-gray-100 text-gray-600'
-                        }`}
-                      >
-                        {v} kg
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              ) : (
-                <div className="space-y-3">
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-3 bg-white border-2 border-gray-200 rounded-xl p-1">
-                      <button
-                        onClick={() => setWeightValue(Math.max(50, weightValue - 50))}
-                        className="w-10 h-10 rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
-                      >
-                        <Minus className="w-4 h-4" />
-                      </button>
-                      <span className="w-16 text-center font-semibold text-lg">{weightValue}</span>
-                      <button
-                        onClick={() => setWeightValue(weightValue + 50)}
-                        className="w-10 h-10 rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
-                      >
-                        <Plus className="w-4 h-4" />
-                      </button>
-                    </div>
-                    <span className="text-sm text-gray-500">gramos</span>
-                  </div>
-                  <div className="flex gap-2">
-                    {[100, 250, 500, 750].map((v) => (
-                      <button
-                        key={v}
-                        onClick={() => setWeightValue(v)}
-                        className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                          weightValue === v ? 'bg-mana-green/10 text-mana-green border border-mana-green' : 'bg-gray-100 text-gray-600'
-                        }`}
-                      >
-                        {v}g
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Add to Cart */}
-            <div className="flex gap-3 pt-2">
-              <AddToCartButton
-                product={product}
-                quantity={effectiveQuantity}
-                variant="full"
-                className="flex-1 py-4 text-lg"
-              />
-            </div>
-
-            {/* Gluten info */}
-            <div className="flex items-center gap-2 text-sm">
-              {product.hasGluten ? (
-                <span className="contains-gluten-badge">
-                  <Wheat className="w-3 h-3" /> Contiene gluten
-                </span>
-              ) : (
-                <span className="gluten-free-badge">
-                  <Wheat className="w-3 h-3" /> Sin gluten
-                </span>
-              )}
-            </div>
+            )}
+            {product.deliveryAvailability === 'pickup_only' && (
+              <p className="text-xs text-amber-600 bg-amber-50 px-3 py-2 rounded-lg">
+                ⚠ Solo disponible para retiro en el local
+              </p>
+            )}
           </div>
+
+          {/* Gluten info */}
+          <div className="flex items-center gap-2 text-sm">
+            {product.hasGluten ? (
+              <span className="contains-gluten-badge">
+                <Wheat className="w-3 h-3" /> Contiene gluten
+              </span>
+            ) : (
+              <span className="gluten-free-badge">
+                <Wheat className="w-3 h-3" /> Sin gluten
+              </span>
+            )}
+          </div>
+
+          {/* Add to Cart - full width green button like reference */}
+          <AddToCartButton
+            product={product}
+            quantity={effectiveQuantity}
+            variant="full"
+            className="w-full py-4 text-base rounded-2xl"
+            label={`Agregar al Carrito ($${totalPrice.toLocaleString('es-AR', { minimumFractionDigits: 0, maximumFractionDigits: 0 })})`}
+          />
         </div>
 
         {/* Related Products */}
         {relatedProducts.length > 0 && (
-          <div className="mt-16">
-            <h2 className="font-heading text-2xl font-bold text-gray-900 mb-6">Productos Relacionados</h2>
+          <div className="mt-8">
+            <h2 className="font-heading text-xl font-bold text-foreground mb-4">Productos Relacionados</h2>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               {relatedProducts.map((rp) => (
                 <Link
@@ -327,7 +228,7 @@ export function ProductDetail() {
                     <img src={rp.images[0]} alt={rp.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                   </div>
                   <div className="p-3">
-                    <h3 className="font-heading font-semibold text-sm text-gray-900 truncate">{rp.title}</h3>
+                    <h3 className="font-heading font-semibold text-sm text-foreground truncate">{rp.title}</h3>
                     <span className="price-tag text-base">${rp.price.toLocaleString()}</span>
                   </div>
                 </Link>
