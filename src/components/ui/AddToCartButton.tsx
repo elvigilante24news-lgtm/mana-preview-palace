@@ -11,7 +11,7 @@ interface AddToCartButtonProps {
   label?: string;
 }
 
-export function AddToCartButton({ product, quantity = 1, variant = 'icon', className = '' }: AddToCartButtonProps) {
+export function AddToCartButton({ product, quantity = 1, variant = 'icon', className = '', label }: AddToCartButtonProps) {
   const [state, setState] = useState<'idle' | 'added'>('idle');
   const { addToCart } = useStore();
 
